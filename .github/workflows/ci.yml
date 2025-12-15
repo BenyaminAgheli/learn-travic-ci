@@ -38,7 +38,7 @@ jobs:
       - name: curl localhost
         run: |
           for i in {1..5}; do
-            if curl --fail http://localhost:2000 > /dev/null; then
+            if curl --fail http://localhost > /dev/null; then
               echo "Flask is up!"
               exit 0
             else
