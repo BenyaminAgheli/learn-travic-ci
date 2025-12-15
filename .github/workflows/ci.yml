@@ -44,6 +44,7 @@ jobs:
             else
               echo "Flask not ready yet, retrying..."
               sleep 2
+              continue
             fi
             exit 0
           done
