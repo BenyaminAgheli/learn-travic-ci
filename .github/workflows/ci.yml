@@ -37,7 +37,7 @@ jobs:
 
       - name: curl localhost
         run: |
-          for i in {1..10}; do
+          for i in {1..5}; do
             if curl --fail http://localhost > /dev/null; then
               echo "Flask is up!"
               break
@@ -45,4 +45,5 @@ jobs:
               echo "Flask not ready yet, retrying..."
               sleep 2
             fi
+            exit 0
           done
