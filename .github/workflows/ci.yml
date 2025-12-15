@@ -64,4 +64,4 @@ jobs:
           IMAGE=ghcr.io/${{ github.repository }}
           IMAGE=$(echo "$IMAGE" | tr '[:upper:]' '[:lower:]')
           docker build -t $IMAGE:test ./app
-          docker push ghcr.io/$IMAGE:test
+          docker push $IMAGE:test
