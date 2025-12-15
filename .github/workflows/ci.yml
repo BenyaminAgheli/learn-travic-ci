@@ -36,4 +36,13 @@ jobs:
         run: docker compose up -d --build
 
       - name: curl localhost
-        run: curl localhost
+        run: |
+          for i in {1..10}; do
+            if curl --fail http://localhost:5000; then
+              echo "Flask is up!"
+              break
+            else
+              echo "Flask not ready yet, retrying..."
+              sleep 2
+            fi
+          done
