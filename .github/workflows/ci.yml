@@ -8,9 +8,13 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v5
 
-      - name: List files in the repository
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+      - neme: Install dependencies
         run: |
-          ls ${{ github.workspace }}
+          python3 -m pip install -r requirements.txt
 
       - name: Run pytest
         run: |
