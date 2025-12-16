@@ -1,6 +1,13 @@
 name: CI
 run-name: "Ripository: ${{ github.repository }} Branch: ${{ github.ref_name }}"
-on: [push]
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    tags:
+      - 'v*'
 jobs:
 #  test-code:
 #    runs-on: ubuntu-latest
@@ -58,10 +65,18 @@ jobs:
 
       - name: Login to GHCR
         run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
+        
+      - name: image/tag name
+        run: |
+          echo "IMAGE_NAME=${IMAGE,,}" >> $GITHUB_ENV
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            TAG=${GITHUB_REF#refs/tags/}
+          else
+            TAG=latest
+          fi
+          echo "IMAGE_TAG=$TAG" >> $GITHUB_ENV 
+          
       - name: Build and Push Docker image
         run: |
-          IMAGE=ghcr.io/${{ github.repository }}
-          IMAGE=$(echo "$IMAGE" | tr '[:upper:]' '[:lower:]')
-          docker build -t $IMAGE:test ./app
-          docker push $IMAGE:test
+          docker build -t $IMAGE_NAME:IMAGE_TAG ./app
+          docker push $IMAGE_NAME:IMAGE_TAG
