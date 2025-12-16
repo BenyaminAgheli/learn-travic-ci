@@ -68,6 +68,7 @@ jobs:
         
       - name: image/tag name
         run: |
+          IMAGE="ghcr.io/${{ github.repository }}"
           echo "IMAGE_NAME=${IMAGE,,}" >> $GITHUB_ENV
           if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
             TAG=${GITHUB_REF#refs/tags/}
