@@ -78,5 +78,7 @@ jobs:
           
       - name: Build and Push Docker image
         run: |
-          docker build -t $IMAGE_NAME:IMAGE_TAG ./app
-          docker push $IMAGE_NAME:IMAGE_TAG
+          echo $IMAGE_NAME
+          echo $IMAGE_TAG
+          # docker build -t $IMAGE_NAME:IMAGE_TAG ./app
+          # docker push $IMAGE_NAME:$IMAGE_TAG
