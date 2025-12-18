@@ -4,12 +4,15 @@ services:
       context: ./app
     container_name: py-app
     restart: on-failure
-    healthcheck:
-      test: curl --fail http://localhost:5000 || exit 1
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
+    depends_on:
+      db:
+        condition: service_healthy
+#    healthcheck:
+#      test: curl --fail http://localhost:5000 || exit 1
+#      interval: 30s
+#      timeout: 5s
+#      retries: 3
+#      start_period: 10s
     networks:
       - docker_net
 
@@ -20,11 +23,33 @@ services:
     restart: always
     ports:
       - "80:80"
-    depends_on:
-      app:
-        condition: service_healthy
+#    depends_on:
+#      app:
+#        condition: service_healthy
     networks:
       - docker_net
+
+  db:
+    image: mysql:9.5.0
+    container_name: app-db
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: no
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uadmin", "-p1qaz"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - docker_net
+    volumes:
+      - ./database/data:/var/lib/mysql
+
 
 networks:
   docker_net:
