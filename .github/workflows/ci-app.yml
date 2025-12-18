@@ -39,8 +39,13 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Login to GHCR
-        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+            
+       
       - name: image/tag name
         run: |
           IMAGE="ghcr.io/${{ github.repository }}"
