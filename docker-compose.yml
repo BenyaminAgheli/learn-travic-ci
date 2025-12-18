@@ -20,10 +20,11 @@ services:
     restart: always
     ports:
       - "80:80"
-#    depends_on:
-#      app:
-#        condition: service_healthy
+    depends_on:
+      app:
+        condition: service_healthy
     networks:
       - docker_net
+
 networks:
   docker_net:
