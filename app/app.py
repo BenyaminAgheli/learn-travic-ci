@@ -1,10 +1,7 @@
 from flask import Flask
-from db.functions import get_connection
+#from db.functions import get_connection
 
 app = Flask(__name__)
-
-if get_connection():
-	print("Connected to MySQL")
 
 @app.route("/")
 def hello_world():
