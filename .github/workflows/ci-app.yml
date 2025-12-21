@@ -9,7 +9,11 @@ on:
     #   - 'v*'
     # paths:
     #   - 'app/**'
-        
+
+permissions:
+  contents: read
+  packages: write
+    
 jobs:
   test-code:
     runs-on: ubuntu-latest
