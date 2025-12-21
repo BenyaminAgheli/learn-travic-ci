@@ -26,10 +26,10 @@ jobs:
       - name: Install dependencies
         run: |
          python3 -m pip install -r app/requirements.txt
-         
+
       - name: Run pytest
         run: |
-         cd app && python3 -m pytest
+         cd app && python3 -m pytest tests/test_app.py
 
   push-registry:
     runs-on: ubuntu-latest

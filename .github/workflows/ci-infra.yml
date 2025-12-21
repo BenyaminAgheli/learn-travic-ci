@@ -36,3 +36,7 @@ jobs:
 
          echo "Flask not ready!"
          exit 1
+
+      - name: test db connection
+        run: |
+          docker exec -it pytest tests/test_db.py

@@ -11,5 +11,3 @@ def test_check_db_connection():
 
 	cursor.close()
 	conn.close()
-
-
