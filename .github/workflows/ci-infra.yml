@@ -48,6 +48,6 @@ jobs:
          echo "Flask not ready!"
          exit 1
 
-      - name: test db connection
+      - name: test datebase connection
         run: |
           docker compose exec -T app pytest tests/test_db.py
