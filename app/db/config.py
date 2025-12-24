@@ -5,5 +5,5 @@ db_config = {
     'port': os.getenv('MYSQL_PORT', 3306),
     'user': os.getenv('MYSQL_USER',''),
     'password': os.getenv('MYSQL_PASSWORD', ''),
-    'database': os.getenv('MYSQL_DATABASE', 'myapp')
+    'database': os.getenv('MYSQL_DATABASE', '')
 }
