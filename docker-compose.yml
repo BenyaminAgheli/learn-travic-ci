@@ -7,12 +7,18 @@ services:
     depends_on:
       db:
         condition: service_healthy
-#    healthcheck:
-#      test: curl --fail http://localhost:5000 || exit 1
-#      interval: 30s
-#      timeout: 5s
-#      retries: 3
-#      start_period: 10s
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_PORT: ${MYSQL_PORT}
+    healthcheck:
+      test: curl --fail http://localhost:5000 || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     volumes:
       - ./app:/app
     networks:
@@ -25,9 +31,9 @@ services:
     restart: always
     ports:
       - "80:80"
-#    depends_on:
-#      app:
-#        condition: service_healthy
+    depends_on:
+      app:
+        condition: service_healthy
     networks:
       - docker_net
 
