@@ -10,6 +10,9 @@ on:
     paths:
       - 'nginx/**'
       - 'docker-compose.yml'
+    pull_request:
+      types:
+        - closed
 jobs:
   docker-up:
     runs-on: ubuntu-latest
