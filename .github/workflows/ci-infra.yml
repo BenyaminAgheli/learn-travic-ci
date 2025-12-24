@@ -13,6 +13,7 @@ on:
     paths:
       - 'nginx/**'
       - 'docker-compose.yml'
+      - '.github/workflows/**'
 jobs:
   docker-up:
     runs-on: ubuntu-latest
@@ -22,6 +23,13 @@ jobs:
 
       - name: Setup Docker
         uses: docker/setup-buildx-action@v2
+      - name: Create .env
+        run: |
+          echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}" >> .env
+          echo "MYSQL_PORT=${{ secrets.MYSQL_PORT }}" >> .env
+          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
+          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
 
       - name: Build and Start containers
         run: docker compose up -d
@@ -43,20 +51,6 @@ jobs:
          echo "Flask not ready!"
          exit 1
 
-      - name: Create .env
-        run:  |
-          echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}"
-          echo "MYSQL_PORT=${{ secrets.MYSQL_PORT }}"
-          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}"
-          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}"
-          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}"
-
-
-      - name: ckeck env
-        run: |
-            docker compose exec app env | grep MYSQL
-        
-            
       - name: test db connection
         run: |
           docker compose exec -T app pytest tests/test_db.py
